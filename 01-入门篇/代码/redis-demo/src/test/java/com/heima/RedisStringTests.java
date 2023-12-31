@@ -13,6 +13,7 @@ import java.util.Map;
 @SpringBootTest
 class RedisStringTests {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -24,8 +25,6 @@ class RedisStringTests {
         Object name = stringRedisTemplate.opsForValue().get("name");
         System.out.println("name = " + name);
     }
-
-    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void testSaveUser() throws JsonProcessingException {

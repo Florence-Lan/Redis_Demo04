@@ -24,7 +24,7 @@ public class ItemController {
     @GetMapping("list")
     public PageDTO queryItemPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "size", defaultValue = "5") Integer size){
+            @RequestParam(value = "size", defaultValue = "5") Integer size) {
         // 分页查询商品
         Page<Item> result = itemService.query()
                 .ne("status", 3)
@@ -42,7 +42,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public void saveItem(@RequestBody Item item){
+    public void saveItem(@RequestBody Item item) {
         itemService.saveItem(item);
     }
 
@@ -52,24 +52,24 @@ public class ItemController {
     }
 
     @PutMapping("stock")
-    public void updateStock(@RequestBody ItemStock itemStock){
+    public void updateStock(@RequestBody ItemStock itemStock) {
         stockService.updateById(itemStock);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         itemService.update().set("status", 3).eq("id", id).update();
     }
 
     @GetMapping("/{id}")
-    public Item findById(@PathVariable("id") Long id){
+    public Item findById(@PathVariable("id") Long id) {
         return itemService.query()
                 .ne("status", 3).eq("id", id)
                 .one();
     }
 
     @GetMapping("/stock/{id}")
-    public ItemStock findStockById(@PathVariable("id") Long id){
+    public ItemStock findStockById(@PathVariable("id") Long id) {
         return stockService.getById(id);
     }
 }

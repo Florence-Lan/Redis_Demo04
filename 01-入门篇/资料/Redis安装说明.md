@@ -6,10 +6,6 @@
 
 Redis的官方网站地址：https://redis.io/
 
-
-
-
-
 # 1.单机安装Redis
 
 ## 1.1.安装Redis依赖
@@ -19,8 +15,6 @@ Redis是基于C语言编写的，因此首先需要安装Redis所需要的gcc依
 ```sh
 yum install -y gcc tcl
 ```
-
-
 
 ## 1.2.上传安装包并解压
 
@@ -48,8 +42,6 @@ tar -xzf redis-6.2.6.tar.gz
 cd redis-6.2.6
 ```
 
-
-
 运行编译命令：
 
 ```sh
@@ -57,8 +49,6 @@ make && make install
 ```
 
 如果没有出错，应该就安装成功了。
-
-
 
 默认的安装路径是在 `/usr/local/bin`目录下：
 
@@ -70,8 +60,6 @@ make && make install
 - redis-server：是redis的服务端启动脚本
 - redis-sentinel：是redis的哨兵启动脚本
 
-
-
 ## 1.3.启动
 
 redis的启动方式有很多种，例如：
@@ -79,8 +67,6 @@ redis的启动方式有很多种，例如：
 - 默认启动
 - 指定配置启动
 - 开机自启
-
-
 
 ### 1.3.1.默认启动
 
@@ -94,15 +80,12 @@ redis-server
 
 ![image-20211211081716167](assets/image-20211211081716167.png)
 
-
-
 这种启动属于`前台启动`，会阻塞整个会话窗口，窗口关闭或者按下`CTRL + C`则Redis停止。不推荐使用。
-
-
 
 ### 1.3.2.指定配置启动
 
-如果要让Redis以`后台`方式启动，则必须修改Redis配置文件，就在我们之前解压的redis安装包下（`/usr/local/src/redis-6.2.6`），名字叫redis.conf：
+如果要让Redis以`后台`方式启动，则必须修改Redis配置文件，就在我们之前解压的redis安装包下（`/usr/local/src/redis-6.2.6`
+），名字叫redis.conf：
 
 ![image-20211211082225509](assets/image-20211211082225509.png)
 
@@ -111,8 +94,6 @@ redis-server
 ```
 cp redis.conf redis.conf.bck
 ```
-
-
 
 然后修改redis.conf文件中的一些配置：
 
@@ -124,8 +105,6 @@ daemonize yes
 # 密码，设置后访问Redis必须输入密码
 requirepass 123321
 ```
-
-
 
 Redis的其它常见配置：
 
@@ -142,8 +121,6 @@ maxmemory 512mb
 logfile "redis.log"
 ```
 
-
-
 启动Redis：
 
 ```sh
@@ -153,8 +130,6 @@ cd /usr/local/src/redis-6.2.6
 redis-server redis.conf
 ```
 
-
-
 停止服务：
 
 ```sh
@@ -162,8 +137,6 @@ redis-server redis.conf
 # 因为之前配置了密码，因此需要通过 -u 来指定密码
 redis-cli -u 123321 shutdown
 ```
-
-
 
 ### 1.3.3.开机自启
 
@@ -191,15 +164,11 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 
-
-
 然后重载系统服务：
 
 ```sh
 systemctl daemon-reload
 ```
-
-
 
 现在，我们可以用下面这组命令来操作redis了：
 
@@ -214,15 +183,11 @@ systemctl restart redis
 systemctl status redis
 ```
 
-
-
 执行下面的命令，可以让redis开机自启：
 
 ```sh
 systemctl enable redis
 ```
-
-
 
 # 2.Redis客户端
 
@@ -231,8 +196,6 @@ systemctl enable redis
 - 命令行客户端
 - 图形化桌面客户端
 - 编程客户端
-
-
 
 ## 2.1.Redis命令行客户端
 
@@ -246,7 +209,7 @@ redis-cli [options] [commonds]
 
 - `-h 127.0.0.1`：指定要连接的redis节点的IP地址，默认是127.0.0.1
 - `-p 6379`：指定要连接的redis节点的端口，默认是6379
-- `-a 123321`：指定redis的访问密码 
+- `-a 123321`：指定redis的访问密码
 
 其中的commonds就是Redis的操作命令，例如：
 
@@ -256,15 +219,11 @@ redis-cli [options] [commonds]
 
 ![image-20211211110439353](assets/image-20211211110439353.png)
 
-
-
 ## 2.2.图形化桌面客户端
 
 GitHub上的大神编写了Redis的图形化桌面客户端，地址：https://github.com/uglide/RedisDesktopManager
 
 不过该仓库提供的是RedisDesktopManager的源码，并未提供windows安装包。
-
-
 
 在下面这个仓库可以找到安装包：https://github.com/lework/RedisDesktopManager-Windows/releases
 
@@ -290,8 +249,6 @@ GitHub上的大神编写了Redis的图形化桌面客户端，地址：https://g
 
 ![image-20211214155406692](assets/image-20211214155406692.png)
 
-
-
 ### 2.2.2.建立连接
 
 点击左上角的`连接到Redis服务器`按钮：
@@ -310,7 +267,7 @@ GitHub上的大神编写了Redis的图形化桌面客户端，地址：https://g
 
 ![image-20211214155849495](assets/image-20211214155849495.png)
 
-Redis默认有16个仓库，编号从0至15.  通过配置文件可以设置仓库数量，但是不超过16，并且不能自定义仓库名称。
+Redis默认有16个仓库，编号从0至15. 通过配置文件可以设置仓库数量，但是不超过16，并且不能自定义仓库名称。
 
 如果是基于redis-cli连接Redis服务，可以通过select命令来选择数据库：
 

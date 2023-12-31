@@ -4,10 +4,12 @@
     padding: 10px;
     text-align: center;
 }
-.el-dialog{
+
+.el-dialog {
     padding: 0 20px;
 }
-.add-btn{
+
+.add-btn {
     width: 100%;
     display: flex;
     display: -webkit-flex; /* Safari */

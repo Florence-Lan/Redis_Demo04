@@ -1,6 +1,6 @@
 // 定义组件
 const lyTop = {
-  template: `
+    template: `
     <div class='nav-top' @click="show=false"> 
      <shortcut/>
         <!--头部--> 
@@ -79,76 +79,76 @@ const lyTop = {
         </div>
     </div> 
       `,
-  name:'ly-top',
-  data() {
-    return {
-      key: "",
-      query: location.search,
-      options: [], // 自动补全的待选项
-      index: -1, // 鼠标悬停的选项的角标
-      show: false
-    }
-  },
-  watch: { // 监控data中的属性的变化，方法名，就是要监控的属性的名称
-    index(){
-      if(this.index !== -1){
-        this.key = this.options[this.index]
-      }
-    }
-  },
-  methods: {
-    handleKeyup(e){
-      console.log(e.key, e.keyCode);
-      if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || e.keyCode === 8){
-        // 用户输入的字符，需要自动补全
-        this.getSuggestion();
-      }else if(e.keyCode === 13){
-        // 用户按回车，需要搜索
-        this.search();
-      }else if(e.keyCode === 38){
-        if(this.index > 0){
-          this.index--;
+    name: 'ly-top',
+    data() {
+        return {
+            key: "",
+            query: location.search,
+            options: [], // 自动补全的待选项
+            index: -1, // 鼠标悬停的选项的角标
+            show: false
         }
-      }else if(e.keyCode === 40){
-        if(this.index >= this.options.length){
-          this.index = 0;
-        }else{
-          this.index++;
+    },
+    watch: { // 监控data中的属性的变化，方法名，就是要监控的属性的名称
+        index() {
+            if (this.index !== -1) {
+                this.key = this.options[this.index]
+            }
         }
-      }else if(e.keyCode === 27){
-        this.show =false
-      }
     },
-    getSuggestion(){ // 查询自动补全
-      if(!this.key){
-        // key没有值，不去搜索了
-        this.options = [];
-        return;
-      }
-      axios.get("/search/goods/suggestion?key=" + this.key)
-        .then(resp => {
-          this.options = resp.data;
-        })
-        .catch(e => {
-          this.options = []
-          console.log(e);
-        })
+    methods: {
+        handleKeyup(e) {
+            console.log(e.key, e.keyCode);
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || e.keyCode === 8) {
+                // 用户输入的字符，需要自动补全
+                this.getSuggestion();
+            } else if (e.keyCode === 13) {
+                // 用户按回车，需要搜索
+                this.search();
+            } else if (e.keyCode === 38) {
+                if (this.index > 0) {
+                    this.index--;
+                }
+            } else if (e.keyCode === 40) {
+                if (this.index >= this.options.length) {
+                    this.index = 0;
+                } else {
+                    this.index++;
+                }
+            } else if (e.keyCode === 27) {
+                this.show = false
+            }
+        },
+        getSuggestion() { // 查询自动补全
+            if (!this.key) {
+                // key没有值，不去搜索了
+                this.options = [];
+                return;
+            }
+            axios.get("/search/goods/suggestion?key=" + this.key)
+                .then(resp => {
+                    this.options = resp.data;
+                })
+                .catch(e => {
+                    this.options = []
+                    console.log(e);
+                })
+        },
+        search() {
+            window.location = '/search.html?key=' + this.key;
+        },
+        getUrlParam: function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return decodeURI(r[2]);
+            }
+            return null;
+        }
     },
-    search() {
-      window.location = '/search.html?key=' + this.key;
-    },
-    getUrlParam: function (name) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = window.location.search.substr(1).match(reg);
-      if (r != null) {
-        return decodeURI(r[2]);
-      }
-      return null;
+    created() {
+        this.key = this.getUrlParam("key");
     }
-  },
-  created() {
-    this.key = this.getUrlParam("key");
-  }
 }
 // 注册组件
 Vue.component("lyTop", lyTop);
